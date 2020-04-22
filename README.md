@@ -1,2 +1,4 @@
-# rocketseat-gostack-bootcamp
-Repository to store all challenges and activites from the GoStack Bootcamp
+# GoStack Bootcamp
+> Just getting started baby...
+
+Repositório que serão salvos todos os desafios e atividades do bootcamp.
