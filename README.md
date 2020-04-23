@@ -1,4 +1,4 @@
 # GoStack Bootcamp
 > Just getting started baby...
 
-Repositório que serão salvos todos os desafios e atividades do bootcamp.
+Repositório em que todas as atividades e alguns desafios serão salvos.
