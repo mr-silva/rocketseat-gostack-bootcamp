@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 
 app.get('/', (req, res) => {
-  return res.json({ message: 'just starting' });
+  return res.json({ ok: false });
 });
 
-app.listen(2408);
+app.listen(2408, () => {
+  console.log('Back-end started!');
+});
