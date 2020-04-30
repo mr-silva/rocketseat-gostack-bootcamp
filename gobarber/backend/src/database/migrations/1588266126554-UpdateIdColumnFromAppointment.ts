@@ -16,7 +16,7 @@ export default class UpdateIdColumnFromAppointment1588266126554
     );
   }
 
-  public async down(queryRunner: QueryRunner): Promise<any> {
+  public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.dropColumn('appointments', 'id');
     await queryRunner.addColumn(
       'appointments',
