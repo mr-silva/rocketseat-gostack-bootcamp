@@ -35,6 +35,6 @@ export const Container = styled.div`
   &:hover span {
     opacity: 1;
     visibility: visible;
-    transition: all ease-in-out 0.4s;
+    transition: all ease-in-out 0.2s;
   }
 `;
