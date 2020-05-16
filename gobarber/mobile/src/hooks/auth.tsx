@@ -8,9 +8,17 @@ import React, {
 import AsyncStorage from '@react-native-community/async-storage';
 import api from '../services/api';
 
+interface UserInfo {
+  id: string;
+  name: string;
+  avatar_id: string;
+  created_at: string;
+  updated_at: string;
+}
+
 interface AuthState {
   token: string;
-  user: object;
+  user: UserInfo;
 }
 
 interface SignInCredentials {
@@ -19,7 +27,8 @@ interface SignInCredentials {
 }
 
 interface AuthContextData {
-  user: object;
+  user: UserInfo;
+  loading: boolean;
   signIn(credentials: SignInCredentials): Promise<void>;
   signOut(): void;
 }
@@ -28,6 +37,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
   const [data, setData] = useState<AuthState>({} as AuthState);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadStoragedData(): Promise<void> {
@@ -39,6 +49,8 @@ export const AuthProvider: React.FC = ({ children }) => {
       if (token && user) {
         setData({ token, user: JSON.parse(user) });
       }
+
+      setLoading(false);
     }
 
     loadStoragedData();
@@ -67,7 +79,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user: data.user, signIn, signOut }}>
+    <AuthContext.Provider value={{ user: data.user, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );
