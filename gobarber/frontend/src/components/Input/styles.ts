@@ -23,6 +23,10 @@ export const Container = styled.div<ContainerProps>`
     props.isErrored &&
     css`
       border: 2px solid #c53030;
+
+      svg {
+        color: #c53030;
+      }
     `}
 
   ${(props) =>
@@ -30,6 +34,10 @@ export const Container = styled.div<ContainerProps>`
     css`
       border: 2px solid #ff9000;
       color: #ff9000;
+
+      svg {
+        color: #ff9000;
+      }
     `}
 
   ${(props) =>
