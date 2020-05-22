@@ -7,8 +7,8 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IStorageProvider from '@shared/container/providers/StorageProviders/models/IStorageProvider';
 
 interface IRequest {
-  userId: string;
-  avatarFilename: string;
+  user_id: string;
+  avatar_filename: string;
 }
 
 @injectable()
@@ -21,8 +21,8 @@ class UpdateUserAvatarService {
     private storageProvider: IStorageProvider,
   ) {}
 
-  public async execute({ userId, avatarFilename }: IRequest): Promise<User> {
-    const user = await this.usersRepository.findById(userId);
+  public async execute({ user_id, avatar_filename }: IRequest): Promise<User> {
+    const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
       throw new AppError('Only authenticated users can change avatar.', 401);
@@ -32,7 +32,7 @@ class UpdateUserAvatarService {
       await this.storageProvider.deleteFile(user.avatar);
     }
 
-    const filename = await this.storageProvider.saveFile(avatarFilename);
+    const filename = await this.storageProvider.saveFile(avatar_filename);
 
     user.avatar = filename;
 

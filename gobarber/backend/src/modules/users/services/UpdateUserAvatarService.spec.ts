@@ -27,8 +27,8 @@ describe('UpdateUserAvatar', () => {
     });
 
     await updateUserAvatar.execute({
-      userId: user.id,
-      avatarFilename: 'test.png',
+      user_id: user.id,
+      avatar_filename: 'test.png',
     });
 
     expect(user.avatar).toBe('test.png');
@@ -37,8 +37,8 @@ describe('UpdateUserAvatar', () => {
   it('should not be able to update unauthenticated/unexisting user avatar', async () => {
     await expect(
       updateUserAvatar.execute({
-        userId: 'unexistent-user',
-        avatarFilename: 'test.png',
+        user_id: 'unexistent-user',
+        avatar_filename: 'test.png',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
@@ -53,13 +53,13 @@ describe('UpdateUserAvatar', () => {
     });
 
     await updateUserAvatar.execute({
-      userId: user.id,
-      avatarFilename: 'old-avatar.png',
+      user_id: user.id,
+      avatar_filename: 'old-avatar.png',
     });
 
     await updateUserAvatar.execute({
-      userId: user.id,
-      avatarFilename: 'new-avatar.png',
+      user_id: user.id,
+      avatar_filename: 'new-avatar.png',
     });
 
     expect(deleteFile).toHaveBeenCalledWith('old-avatar.png');
