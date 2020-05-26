@@ -5,10 +5,11 @@ import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenti
 import ProfileController from '@modules/users/infra/http/controllers/ProfileController';
 
 const profileRouter = Router();
-const profielController = new ProfileController();
+const profileController = new ProfileController();
 
 profileRouter.use(ensureAuthenticated);
 
-profileRouter.put('/', profielController.update);
+profileRouter.get('/', profileController.show);
+profileRouter.put('/', profileController.update);
 
 export default profileRouter;
