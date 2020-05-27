@@ -62,4 +62,34 @@ describe('SendForgotPasswordEmail', () => {
 
     expect(generateToken).toHaveBeenCalledWith(user.id);
   });
+
+  it('should not generate a new token if old one is valid', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'Test',
+      email: 'test@email.com',
+      password: '123456',
+    });
+
+    const userToken = await fakeUserTokensRepository.generate(user.id);
+
+    expect(await fakeUserTokensRepository.generate(user.id)).toEqual(userToken);
+  });
+
+  it('should generate a new token if old one expired', async () => {
+    const user = await fakeUsersRepository.create({
+      name: 'Test',
+      email: 'test@email.com',
+      password: '123456',
+    });
+
+    const userToken = await fakeUserTokensRepository.generate(user.id);
+
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+      const customDate = new Date();
+
+      return customDate.setHours(customDate.getHours() + 3);
+    });
+
+    expect(fakeUserTokensRepository.generate(user.id)).not.toEqual(userToken);
+  });
 });

@@ -1,4 +1,5 @@
 import { Repository, getRepository } from 'typeorm';
+import { isAfter, addHours } from 'date-fns';
 
 import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
 
@@ -12,6 +13,26 @@ class UserTokensRepository implements IUserTokensRepository {
   }
 
   public async generate(user_id: string): Promise<UserToken> {
+    const userTokens = await this.ormRepository.find({
+      where: { user_id },
+    });
+
+    const checkIfExistsAValidToken = userTokens.filter(filteredUserToken => {
+      if (
+        filteredUserToken.user_id === user_id &&
+        isAfter(addHours(filteredUserToken.created_at, 2), Date.now())
+      ) {
+        return filteredUserToken;
+      }
+      return undefined;
+    });
+
+    console.log(checkIfExistsAValidToken);
+
+    if (checkIfExistsAValidToken.length) {
+      return checkIfExistsAValidToken[0];
+    }
+
     const userToken = this.ormRepository.create({
       user_id,
     });
