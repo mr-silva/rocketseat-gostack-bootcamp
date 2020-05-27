@@ -27,8 +27,6 @@ class UserTokensRepository implements IUserTokensRepository {
       return undefined;
     });
 
-    console.log(checkIfExistsAValidToken);
-
     if (checkIfExistsAValidToken.length) {
       return checkIfExistsAValidToken[0];
     }
