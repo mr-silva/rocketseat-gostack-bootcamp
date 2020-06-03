@@ -5,21 +5,23 @@ import ProviderDayAvailability from '@modules/appointments/infra/http/controller
 import ProviderMonthAvailability from '@modules/appointments/infra/http/controllers/ProviderMonthAvailability';
 import ensureAuthenticated from '@modules/users/infra/middlewares/ensureAuthenticated';
 
-const appointmentsRouter = Router();
+const providersRouter = Router();
 const providersController = new ProvidersController();
 const providerDayController = new ProviderDayAvailability();
 const providerMonthController = new ProviderMonthAvailability();
 
-appointmentsRouter.use(ensureAuthenticated);
+providersRouter.use(ensureAuthenticated);
 
-appointmentsRouter.get('/', providersController.index);
-appointmentsRouter.get(
+providersRouter.get('/', providersController.index);
+
+providersRouter.get(
   '/:provider_id/day-availability',
   providerDayController.index,
 );
-appointmentsRouter.get(
+
+providersRouter.get(
   '/:provider_id/month-availability',
   providerMonthController.index,
 );
 
-export default appointmentsRouter;
+export default providersRouter;
