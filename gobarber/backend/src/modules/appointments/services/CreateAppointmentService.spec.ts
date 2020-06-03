@@ -1,16 +1,20 @@
 import AppError from '@shared/errors/AppError';
 
+import FakeNotificationsRepository from '@modules/notifications/repositories/fakes/FakeNotificatiosRepository';
 import FakeAppointmentsRepository from '../repositories/fakes/FakeAppointmentsRepository';
 import CreateAppointmentService from './CreateAppointmentService';
 
+let fakeNotificationsRepository: FakeNotificationsRepository;
 let fakeAppointmentsRepository: FakeAppointmentsRepository;
 let createAppointment: CreateAppointmentService;
 
 describe('CreateAppointment', () => {
   beforeEach(() => {
     fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    fakeNotificationsRepository = new FakeNotificationsRepository();
     createAppointment = new CreateAppointmentService(
       fakeAppointmentsRepository,
+      fakeNotificationsRepository,
     );
   });
 
@@ -31,7 +35,7 @@ describe('CreateAppointment', () => {
   });
 
   it('should not be able to create a new appointment when date is not available', async () => {
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => {
       return new Date(2020, 5, 2, 12).getTime();
     });
 
@@ -103,7 +107,7 @@ describe('CreateAppointment', () => {
   });
 
   it('should not be able to create appointment in the same date for diferent provider', async () => {
-    jest.spyOn(Date, 'now').mockImplementationOnce(() => {
+    jest.spyOn(Date, 'now').mockImplementation(() => {
       return new Date(2020, 5, 2, 12).getTime();
     });
 
