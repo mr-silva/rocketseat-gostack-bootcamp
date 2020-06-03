@@ -12,12 +12,12 @@ class NotificationsRepository implements INotificationsRepository {
   }
 
   public async create({
-    content,
     recipient_id,
+    content,
   }: ICreateNotificationDTO): Promise<Notification> {
     const notification = this.ormRepository.create({
-      content,
       recipient_id,
+      content,
     });
 
     await this.ormRepository.save(notification);
