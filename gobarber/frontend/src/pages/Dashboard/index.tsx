@@ -1,11 +1,20 @@
 import React from 'react';
-import { FiPower } from 'react-icons/fi';
+import { FiPower, FiClock } from 'react-icons/fi';
 
 import { useAuth } from '../../hooks/auth';
 
 import logoImage from '../../assets/logo.svg';
 
-import { Container, Header, HeaderContent, Profile } from './styles';
+import {
+  Container,
+  Header,
+  HeaderContent,
+  Profile,
+  Content,
+  Schedule,
+  NextAppointment,
+  Calendar,
+} from './styles';
 
 const Dashboard: React.FC = () => {
   const { signOut, user } = useAuth();
@@ -28,6 +37,29 @@ const Dashboard: React.FC = () => {
           </button>
         </HeaderContent>
       </Header>
+      <Content>
+        <Schedule>
+          <h1>Horários Agendados</h1>
+          <p>
+            <span>Hoje</span>
+            <span>Dia 20</span>
+            <span>Sábado</span>
+          </p>
+
+          <NextAppointment>
+            <strong>Atendimento a seguir</strong>
+            <div>
+              <img src={user.avatar_url} alt={user.name} />
+              <strong>{user.name}</strong>
+              <span>
+                <FiClock />
+                08:00
+              </span>
+            </div>
+          </NextAppointment>
+        </Schedule>
+        <Calendar />
+      </Content>
     </Container>
   );
 };
