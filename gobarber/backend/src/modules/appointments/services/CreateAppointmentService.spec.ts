@@ -132,4 +132,20 @@ describe('CreateAppointment', () => {
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
+
+  it('should not be able to create appointment on the weekend', async () => {
+    jest.spyOn(Date, 'now').mockImplementation(() => {
+      return new Date(2020, 5, 2, 12).getTime();
+    });
+
+    const appointmentDate = new Date(2020, 5, 6, 13);
+
+    await expect(
+      createAppointment.execute({
+        date: appointmentDate,
+        provider_id: '1234',
+        user_id: 'user',
+      }),
+    ).rejects.toBeInstanceOf(AppError);
+  });
 });
