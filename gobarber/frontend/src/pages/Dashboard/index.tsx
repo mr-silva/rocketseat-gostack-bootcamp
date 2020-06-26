@@ -3,6 +3,7 @@ import { isToday, format, parseISO, isAfter } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR';
 import DayPicker, { DayModifiers } from 'react-day-picker';
 import { FiPower, FiClock } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 import { useAuth } from '../../hooks/auth';
 import api from '../../services/api';
@@ -94,7 +95,17 @@ const Dashboard: React.FC = () => {
 
   const disabledDays = useMemo(() => {
     const dates = monthAvailability
-      .filter(monthDay => monthDay.available === false)
+      .filter(
+        monthDay =>
+          !isAfter(
+            new Date(
+              currentMonth.getFullYear(),
+              currentMonth.getMonth(),
+              monthDay.day,
+            ),
+            new Date(),
+          ),
+      )
       .map(monthDay => {
         const year = currentMonth.getFullYear();
         const month = currentMonth.getMonth();
@@ -145,7 +156,9 @@ const Dashboard: React.FC = () => {
             <img src={user.avatar_url} alt={user.name} />
             <div>
               <span>Bem-vindo</span>
-              <strong>{user.name}</strong>
+              <Link to="/profile">
+                <strong>{user.name}</strong>
+              </Link>
             </div>
           </Profile>
           <button type="button" onClick={signOut}>
